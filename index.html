@@ -69,19 +69,18 @@
               
           //set parameters for multisegmentation API
           if (eventName && propName && propNameTwo) {
-            var endpoint = '/api/2.0/segmentation/multiseg';
             var dates = getDates();
             var params =  $.extend({}, dates, {
-              'type': typeName,
-              'inner': 'properties[\"' + propNameTwo + '\"]',
-              'outer': 'properties[\"' + propName + '\"]',
-              'event': eventName,
+              'limit' : 10,
               'interval': getInterval(dates)
             });
             
             //get the data from the API and reorganize the data
-            MP.api.query(endpoint, params).done(function(results) {
-              var output = {}
+            MP.api.propertyValues(eventName, propName, params).done(function(results) {
+              console.log(results.values());
+            };
+              
+              /*var output = {}
               var query = results["data"]["values"]
               
               _.each(_.keys(query), function(properties){
@@ -116,7 +115,7 @@
               eventTable.MPTable('setData', results);
             });
           }
-        };
+        };*/
         
         //actions when dropdowns change
         eventSelect.on('change', function(e, eventName) {
